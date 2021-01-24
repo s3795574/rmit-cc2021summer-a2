@@ -1,5 +1,5 @@
 {
-  "name": "hexal-serverless-starter",
+  "name": "cc2021summer-a2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,6 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "aws-amplify": "^3.3.14",
+    "aws-sdk": "^2.829.0",
     "axios": "^0.18.0",
     "bulma": "^0.7.2",
     "react": "^16.7.0",

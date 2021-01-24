@@ -6,24 +6,31 @@ const config = require('../config.json');
 export default class Products extends Component {
 
   state = {
-    newproduct: null,
-    products: []
+    user:null,
+    newfile: null,
+    files: []
   }
 
   fetchProducts = async () => {
     // add call to AWS API Gateway to fetch products here
     // then set them in state
     try {
-      const res = await axios.get(`${config.api.invokeUrl}/products`);
-      const products = res.data;
-      this.setState({ products: products });
+      //Get all the files of the current user.
+      const res = await axios.get(`${config.api.invokeUrl}/files/${this.props.auth.user.username}`);
+      const files = res.data;
+      this.setState({ files: files });
     } catch (err) {
       console.log(`An error has occurred: ${err}`);
     }
   }
 
   componentDidMount = () => {
-    this.fetchProducts();
+    if(!this.props.auth.user){
+      //do nothing if no user logged in
+    }else{
+      this.setState({user:this.props.auth.user.username})
+      this.fetchProducts();
+    }   
   }
 
   render() {
@@ -31,16 +38,16 @@ export default class Products extends Component {
       <Fragment>
         <section className="section">
           <div className="container">
-            <h1>Energy Products</h1>
-            <p className="subtitle is-5">Invest in a clean future with our efficient and cost-effective green energy products:</p>
+            <h1>Files</h1>
+            <p className="subtitle is-5">All files:</p>
             <br />
             <div className="columns">
               <div className="column">
                 <div className="tile is-ancestor">
                   <div className="tile is-4 is-parent  is-vertical">
                     { 
-                      this.state.products && this.state.products.length > 0
-                      ? this.state.products.map(product => <Product name={product.productname} id={product.id} key={product.id} />)
+                      this.state.files && this.state.files.length > 0
+                      ? this.state.files.map(file => <Product etag={file.etag} filename={file.filename} metaData={file.metaData} key={file.user+file.etag} />)
                       : <div className="tile notification is-warning">No products available</div>
                     }
                   </div>

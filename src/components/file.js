@@ -51,8 +51,9 @@ export default class ProductAdmin extends Component {
               >save</button>
             </div>
           : <div>
-              <p className="product-title">{ this.props.name }</p>
-              <p className="product-id">id: { this.props.id }</p>
+              <p className="product-title">{ this.props.filename }</p>
+              <p className="product-id">etag: { this.props.etag }</p>
+              <p className="product-id">download: { this.props.metaData }</p>
             </div>
         }
       </div>

@@ -40,6 +40,13 @@ class App extends Component {
       this.setAuthStatus(true);
       console.log(session);
       const user = await Auth.currentAuthenticatedUser();
+      //The code below could get current user email
+      await Auth.currentSession().then((data) => {
+        let idToken = data.getIdToken();
+        console.dir(idToken);
+        let email = idToken.payload.email;
+        console.log(email);
+     }).catch(err => console.log(err));;
       this.setUser(user);
     }catch(error){
       console.log(error);
