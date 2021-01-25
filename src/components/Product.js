@@ -52,8 +52,8 @@ export default class ProductAdmin extends Component {
             </div>
           : <div>
               <p className="product-title">{ this.props.filename }</p>
-              <p className="product-id">etag: { this.props.etag }</p>
-              <p className="product-id">download: { this.props.metaData }</p>
+              <p className="product-id">Etag: { this.props.etag }</p>
+              <a href={"http://"+this.props.metaData}>Download Link</a>
             </div>
         }
       </div>
