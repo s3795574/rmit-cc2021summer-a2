@@ -5,13 +5,9 @@ const config = require('../config.json');
 export default class ProductAdmin extends Component {
 
   state = {
-    newFile: { 
-      "user": "",
-      "etag": "",
-      "filename":"",
-      "metaData":""
-    },
-    files: []
+    etag:"",
+    filename:"",
+    downloadLink:""
   }
 
   addingDynamoDBRecord = async (user,etag,filename,metaData, event) => {
@@ -25,7 +21,6 @@ export default class ProductAdmin extends Component {
         "metaData":metaData
       };
       await axios.post(`${config.api.invokeUrl}/files/${user}`, params);
-      this.setState({ files: [...this.state.files, this.state.newFile] });
       this.setState({ newFile: { "user": "", "etag": "", "filename": "", "metaData": ""}});
     }catch (err) {
       console.log(`An error has occurred: ${err}`);
@@ -56,6 +51,14 @@ export default class ProductAdmin extends Component {
       console.log(`Unable to delete product: ${err}`);
     }
   }
+  //because the setState and console.log are not asynchronous, so we use the callback function as a secondary argument
+  //So that we can debug in browser console. This method will set filename once we select a file
+  onChange = async (event) => {
+    this.setState({filename:event.target.files[0].name},()=>{
+      console.log(this.state.filename)
+    }) 
+    
+  }
 
   componentDidMount = () => {
   }
@@ -64,7 +67,8 @@ export default class ProductAdmin extends Component {
     return (
       <Fragment>
        <section className="section">
-          <form onSubmit={event => this.addingDynamoDBRecord(this.props.auth.user.username,"abcde","fn","dl", event)}>
+          <form onSubmit={event => this.addingDynamoDBRecord(
+            this.props.auth.user.username,this.state.etag,this.state.filename,this.state.downloadLink, event)}>
             <h1>File Upload</h1>
             <p className="subtitle is-5">Add a file to your cloud storage:</p>
             <input type="file" onChange={this.onChange} />
