@@ -13277,6 +13277,11 @@
   dependencies:
     "indexof" "0.0.1"
 
+"vue@^2.6.12":
+  "integrity" "sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg=="
+  "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.12.tgz"
+  "version" "2.6.12"
+
 "w3c-hr-time@^1.0.1":
   "integrity" "sha1-gqwr/2PZUOqeMYmlimViX+3xkEU="
   "resolved" "https://registry.npmjs.org/w3c-hr-time/-/w3c-hr-time-1.0.1.tgz"
