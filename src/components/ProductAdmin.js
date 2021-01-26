@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from "axios";
+
 const config = require('../config.json');
 
 export default class ProductAdmin extends Component {
@@ -9,22 +10,22 @@ export default class ProductAdmin extends Component {
     filename:"",
     downloadLink:"",
     secureUploadLink:"",
-    key:"",
-    image:""
+    key:""
   }
   uploadFile = async (event) =>{
     event.preventDefault();
+    //get the signedURL
     try{
       const res = await axios.get(`${config.S3api.invokeUrl}/s3/${this.props.auth.user.username}?filename=${this.state.filename}`);
       const data = res.data;
+      //store the current state
       this.setState({secureUploadLink:data.uploadURL});
       this.setState({key:data.Key});
       console.log(this.state.secureUploadLink);
       console.log(this.state.key);
-
+      //upload img via signedURL
       var image = document.getElementById('uploadFile').files[0];
-
-      const response = await fetch(
+      await fetch(
         new Request(this.state.secureUploadLink, {
           method: 'PUT',
           body: image,
@@ -34,31 +35,27 @@ export default class ProductAdmin extends Component {
           }),
         }),
       );
-
-      console.log(response);
-      console.log(image);
-
+      //create a download link
+      var prefix = "https://cc2021summer-assignment2.s3.amazonaws.com/";
+      this.setState({downloadLink:prefix + this.state.key});
+      //update DynamoDB 
+      try {
+        //This object represent a record in DynamoDB
+        const params = {
+          "user": this.props.auth.user.username,
+          "etag": "etag",
+          "filename":this.state.filename,
+          "metaData":this.state.downloadLink
+        };
+        await axios.post(`${config.api.invokeUrl}/files/${this.props.auth.user.username}`, params);
+      }catch (err) {
+        console.log(`An error has occurred: ${err}`);
+      }
+      //clean the state
+      this.setState({etag:"",filename:"",downloadLink:"",secureUploadLink:"",key:""});
     }catch(err){
       console.log(`An error has occurred: ${err}`);
     }  
-  }
-
-  addingDynamoDBRecord = async (user,etag,filename,metaData, event) => {
-    event.preventDefault();
-    // add call to AWS API Gateway add product endpoint here
-    try {
-      //This object represent a record in DynamoDB
-      const params = {
-        "user": user,
-        "etag": etag,
-        "filename":filename,
-        "metaData":metaData
-      };
-      await axios.post(`${config.api.invokeUrl}/files/${user}`, params);
-      this.setState({ newFile: { "user": "", "etag": "", "filename": "", "metaData": ""}});
-    }catch (err) {
-      console.log(`An error has occurred: ${err}`);
-    }
   }
 
   updatingDynamoDBRecord = async (user,etag,filename,metaData, name) => {
