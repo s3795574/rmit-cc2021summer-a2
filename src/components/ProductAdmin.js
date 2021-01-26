@@ -25,7 +25,7 @@ export default class ProductAdmin extends Component {
       console.log(this.state.key);
       //upload img via signedURL
       var image = document.getElementById('uploadFile').files[0];
-      await fetch(
+      var response = await fetch(
         new Request(this.state.secureUploadLink, {
           method: 'PUT',
           body: image,
@@ -35,6 +35,8 @@ export default class ProductAdmin extends Component {
           }),
         }),
       );
+      this.setState({etag:response.headers.get('ETag')})
+      console.log(response.headers.get('ETag'));
       //create a download link
       var prefix = "https://cc2021summer-assignment2.s3.amazonaws.com/";
       this.setState({downloadLink:prefix + this.state.key});
@@ -43,7 +45,7 @@ export default class ProductAdmin extends Component {
         //This object represent a record in DynamoDB
         const params = {
           "user": this.props.auth.user.username,
-          "etag": "etag",
+          "etag": this.state.etag,
           "filename":this.state.filename,
           "metaData":this.state.downloadLink
         };
@@ -53,6 +55,8 @@ export default class ProductAdmin extends Component {
       }
       //clean the state
       this.setState({etag:"",filename:"",downloadLink:"",secureUploadLink:"",key:""});
+      //display in console indicates that the updating is done.
+      console.log(`Done`);
     }catch(err){
       console.log(`An error has occurred: ${err}`);
     }  
