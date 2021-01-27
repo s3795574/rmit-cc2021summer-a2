@@ -26,10 +26,10 @@ export default class Navbar extends Component {
             <a href="/" className="navbar-item">
               Home
             </a>
-            <a href="/products" className="navbar-item">
+            <a href="/files" className="navbar-item">
               Files
             </a>
-            <a href="/admin" className="navbar-item">
+            <a href="/upload" className="navbar-item">
               Upload File
             </a>
           </div>

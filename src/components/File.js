@@ -1,5 +1,5 @@
 import React, { Component, Fragment }  from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class ProductAdmin extends Component {
 
@@ -25,11 +25,11 @@ export default class ProductAdmin extends Component {
     return (
       <div className="tile is-child box notification is-success">
         {
-          this.props.isAdmin && 
+          //this.props.isAdmin && 
           <Fragment>
-            <a href="/" onClick={this.handleProductEdit} className="product-edit-icon">
+            {/* <a href="/" onClick={this.handleProductEdit} className="product-edit-icon">
               <FontAwesomeIcon icon="edit" />
-            </a>
+            </a> */}
             <button onClick={event => this.props.handleDeleteProduct(this.props.id, event)} className="delete"></button>
           </Fragment>
         }
@@ -51,7 +51,7 @@ export default class ProductAdmin extends Component {
               >save</button>
             </div>
           : <div>
-              <p className="product-title">{ this.props.filename }</p>
+              <p className="product-title">File Name: { this.props.filename }</p>
               <p className="product-id">Etag: { this.props.etag }</p>
               <a href={this.props.metaData}>Download Link</a>
             </div>

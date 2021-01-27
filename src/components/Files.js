@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Product from './Product';
+import File from './File';
 import axios from "axios";
 const config = require('../config.json');
 
@@ -47,7 +47,7 @@ export default class Products extends Component {
                   <div className="tile is-4 is-parent  is-vertical">
                     { 
                       this.state.files && this.state.files.length > 0
-                      ? this.state.files.map(file => <Product etag={file.etag} filename={file.filename} metaData={file.metaData} key={file.user+file.etag} />)
+                      ? this.state.files.map(file => <File etag={file.etag} filename={file.filename} metaData={file.metaData} key={file.user+"/"+file.filename} />)
                       : <div className="tile notification is-warning">No products available</div>
                     }
                   </div>
