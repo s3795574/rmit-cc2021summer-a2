@@ -12,6 +12,7 @@ export default class ProductAdmin extends Component {
     secureUploadLink:"",
     key:""
   }
+  //This is the method that handle upload image to the S3 bucket and update DynamoDB
   uploadFile = async (event) =>{
     event.preventDefault();
     //get the signedURL
@@ -35,7 +36,7 @@ export default class ProductAdmin extends Component {
           }),
         }),
       );
-      this.setState({etag:response.headers.get('ETag')})
+      this.setState({etag:response.headers.get('ETag').replace(/['"]+/g, '')})
       console.log(response.headers.get('ETag'));
       //create a download link
       var prefix = "https://cc2021summer-assignment2.s3.amazonaws.com/";

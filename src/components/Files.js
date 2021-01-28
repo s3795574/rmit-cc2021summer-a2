@@ -47,7 +47,7 @@ export default class Products extends Component {
                   <div className="tile is-4 is-parent  is-vertical">
                     { 
                       this.state.files && this.state.files.length > 0
-                      ? this.state.files.map(file => <File etag={file.etag} filename={file.filename} metaData={file.metaData} key={file.user+"/"+file.filename} />)
+                      ? this.state.files.map(file => <File etag={file.etag.replace(/['"]+/g, '')} filename={file.filename} metaData={file.metaData} key={file.user+"/"+file.filename} user={file.user}/>)
                       : <div className="tile notification is-warning">No products available</div>
                     }
                   </div>

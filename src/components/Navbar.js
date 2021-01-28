@@ -17,7 +17,7 @@ export default class Navbar extends Component {
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <a className="navbar-item" href="/">
-            <img src="hexal-logo.png" width="112" height="28" alt="hexal logo" />
+            <img src="logo.png"  alt="hexal logo" />
           </a>
         </div>
 
@@ -51,6 +51,11 @@ export default class Navbar extends Component {
                   Log in
                   </a>
                   </div>
+                )}
+                {this.props.auth.isAuthenticated && (
+                  <a href="/changepassword" className="button is-primary">
+                  Change Password
+                  </a>
                 )}
                 {this.props.auth.isAuthenticated && (
                   <a href="/" onClick={this.handleLogOut} className="button is-light">

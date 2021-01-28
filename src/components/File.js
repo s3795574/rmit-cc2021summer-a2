@@ -1,4 +1,6 @@
 import React, { Component, Fragment }  from 'react';
+import axios from "axios";
+const config = require('../config.json');
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default class ProductAdmin extends Component {
@@ -7,19 +9,22 @@ export default class ProductAdmin extends Component {
     isEditMode: false,
     updatedproductname: this.props.name
   }
-
-  handleProductEdit = event => {
+  //delete item in both S3 and DynamoDB
+  deleteFile = async (user,filename,etag, event) =>{
     event.preventDefault();
-    this.setState({ isEditMode: true });
+    try {
+      await axios.delete(`${config.S3api.invokeUrl}/s3delete/${user}?filename=${filename}`);
+       const params = {
+       };
+      console.log(user);
+      await axios.delete(`${config.api.invokeUrl}/files/${user}?etag=${etag}`,params);
+      console.log("db");
+    }catch (err) {
+      console.log(`Unable to delete product: ${err}`);
+    }
   }
 
-  handleEditSave = event => {
-    event.preventDefault();
-    this.setState({ isEditMode: false });
-    this.props.handleUpdateProduct(this.props.id, this.state.updatedproductname);
-  }
 
-  onAddProductNameChange = event => this.setState({ "updatedproductname": event.target.value });
 
   render() {
     return (
@@ -30,31 +35,32 @@ export default class ProductAdmin extends Component {
             {/* <a href="/" onClick={this.handleProductEdit} className="product-edit-icon">
               <FontAwesomeIcon icon="edit" />
             </a> */}
-            <button onClick={event => this.props.handleDeleteProduct(this.props.id, event)} className="delete"></button>
+            <button onClick={event => this.deleteFile(this.props.user,this.props.filename,this.props.etag, event)} className="delete"></button>
           </Fragment>
         }
         {
-          this.state.isEditMode 
-          ? <div>
-              <p>Edit product name</p>
-              <input 
-                className="input is-medium"
-                type="text" 
-                placeholder="Enter name"
-                value={this.state.updatedproductname}
-                onChange={this.onAddProductNameChange}
-              />
-              <p className="product-id">id: { this.props.id }</p>
-              <button type="submit" 
-                className="button is-info is-small"
-                onClick={ this.handleEditSave }
-              >save</button>
-            </div>
-          : <div>
-              <p className="product-title">File Name: { this.props.filename }</p>
-              <p className="product-id">Etag: { this.props.etag }</p>
+          // this.state.isEditMode 
+          // ? <div>
+          //     <p>Edit product name</p>
+          //     <input 
+          //       className="input is-medium"
+          //       type="text" 
+          //       placeholder="Enter name"
+          //       value={this.state.updatedproductname}
+          //       onChange={this.onAddProductNameChange}
+          //     />
+          //     <p className="product-id">id: { this.props.id }</p>
+          //     <button type="submit" 
+          //       className="button is-info is-small"
+          //       onClick={ this.handleEditSave }
+          //     >save</button>
+          //   </div>
+          // : 
+          <div>
+              <p className="product-title">File Name: { this.props.filename + ".jpg"}</p>
+              <p className="product-id">Etag: { this.props.etag}</p>
               <a href={this.props.metaData}>Download Link</a>
-            </div>
+          </div>
         }
       </div>
     )
