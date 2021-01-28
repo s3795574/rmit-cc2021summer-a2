@@ -58,11 +58,13 @@ export default class ProductAdmin extends Component {
       this.setState({etag:"",filename:"",downloadLink:"",secureUploadLink:"",key:""});
       //display in console indicates that the updating is done.
       console.log(`Done`);
+      //redirect to files page
+      this.props.history.push('/files');
     }catch(err){
       console.log(`An error has occurred: ${err}`);
     }  
   }
-
+  //
   updatingDynamoDBRecord = async (user,etag,filename,metaData, name) => {
     // add call to AWS API Gateway update product endpoint here
     try {
@@ -79,15 +81,6 @@ export default class ProductAdmin extends Component {
     }
   }
 
-  deletingDynamoDBRecord = async (user,etag, event) => {
-    event.preventDefault();
-    // add call to AWS API Gateway delete product endpoint here
-    try {
-      await axios.delete(`${config.api.invokeUrl}/files/${user}?etag=${etag}`);
-    }catch (err) {
-      console.log(`Unable to delete product: ${err}`);
-    }
-  }
   //because the setState and console.log are not asynchronous, so we use the callback function as a secondary argument
   //So that we can debug in browser console. This method will set filename once we select a file
   onChange = async (event) => {
@@ -107,8 +100,8 @@ export default class ProductAdmin extends Component {
           <form onSubmit={event => this.uploadFile(event)}>
             <h1>File Upload</h1>
             <p className="subtitle is-5">Add a file to your cloud storage:</p>
-            <input type="file" id="uploadFile" onChange={this.onChange} />
-            <button type="submit">Upload</button>
+            <input type="file" id="uploadFile" onChange={this.onChange}/>
+            <button type="submit" className="button is-primary">Upload</button>
           </form>
         </section>
       </Fragment>

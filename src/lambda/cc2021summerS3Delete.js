@@ -5,11 +5,11 @@ const s3 = new AWS.S3()
 exports.handler = async (event) =>{
     const user = event.pathParameters.id;
     const fileName = event["queryStringParameters"]["filename"];
-    const objectKey = user + "/" + fileName + ".jpg"
+    const objectKey = user + "/" + fileName + ".jpg";
 
     const s3Params = {
         Bucket: process.env.UploadBucket,
-        Key:objectKey,
+        Key:objectKey
     }
 
     await s3.deleteObject(s3Params).promise();
@@ -20,4 +20,5 @@ exports.handler = async (event) =>{
             "access-control-allow-origin" : "*"
         }
     })
+  })
 }

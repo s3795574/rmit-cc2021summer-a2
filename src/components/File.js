@@ -1,5 +1,6 @@
 import React, { Component, Fragment }  from 'react';
 import axios from "axios";
+
 const config = require('../config.json');
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -18,7 +19,9 @@ export default class ProductAdmin extends Component {
        };
       console.log(user);
       await axios.delete(`${config.api.invokeUrl}/files/${user}?etag=${etag}`,params);
-      console.log("db");
+      console.log("done");
+      //redirect to files page
+      window.location.reload();
     }catch (err) {
       console.log(`Unable to delete product: ${err}`);
     }
