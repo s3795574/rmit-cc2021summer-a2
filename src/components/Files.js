@@ -44,7 +44,7 @@ export default class Products extends Component {
             <div className="columns">
               <div className="column">
                 <div className="tile is-ancestor">
-                  <div className="tile is-4 is-parent  is-vertical">
+                  <div className="tile" id="file-display">
                     { 
                       this.state.files && this.state.files.length > 0
                       ? this.state.files.map(file => <File etag={file.etag.replace(/['"]+/g, '')} filename={file.filename} metaData={file.metaData} key={file.user+"/"+file.filename} user={file.user}/>)
