@@ -11,7 +11,7 @@ export default function Footer() {
            Man Hou(S3795574) & Juancho Aguirre(S3776171)    
         </p>
         <p>
-          Our Work based on https://github.com/jspruance/aws-cognito-tutorial-starter.
+          Our Work is based on https://github.com/jspruance/aws-cognito-tutorial-starter.
         </p>
       </div>
     </footer>

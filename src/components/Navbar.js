@@ -17,7 +17,7 @@ export default class Navbar extends Component {
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <a className="navbar-item" href="/">
-            <img src="logo.png"  alt="hexal logo" />
+            <img src="logo.png"  alt="dropoutbox logo" />
           </a>
         </div>
 
@@ -30,7 +30,7 @@ export default class Navbar extends Component {
               Files
             </a>
             <a href="/upload" className="navbar-item">
-              Upload File
+              Upload 
             </a>
           </div>
 
@@ -47,7 +47,7 @@ export default class Navbar extends Component {
                   <a href="/register" className="button is-primary">
                   <strong>Register</strong>
                   </a>
-                  <a href="/login" className="button is-light">
+                  <a href="/login" className="button is-secondary">
                   Log in
                   </a>
                   </div>
@@ -58,7 +58,7 @@ export default class Navbar extends Component {
                   </a>
                 )}
                 {this.props.auth.isAuthenticated && (
-                  <a href="/" onClick={this.handleLogOut} className="button is-light">
+                  <a href="/" onClick={this.handleLogOut} className="button is-secondary">
                   Log Out
                   </a>
                 )}

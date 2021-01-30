@@ -38,7 +38,8 @@ export default class Products extends Component {
       <Fragment>
         <section className="section">
           <div className="container">
-            <h1>Files</h1>
+            <h1 className="title">Files</h1>
+            <br/>
             <p className="subtitle is-5">All files:</p>
             <br />
             <div className="columns">

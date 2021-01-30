@@ -1,6 +1,3 @@
-h1 {
-  font-size: 2em;
-}
 
 .product-title {
   font-weight: bold;
@@ -29,10 +26,12 @@ h1 {
 }
 
 .navbar-menu {
-  flex-grow: 1 !important;
+  flex-grow: 10 !important;
   flex-shrink: 0 !important;
   box-shadow: none !important;
   padding: 0 !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar-item {
@@ -62,15 +61,26 @@ body {
   margin-left: 1em;
 }
 
-#file-display {
-  display: grid;
-  grid-template-columns: repeat(4, 2fr);
-  grid-gap: 1em;
+#a2-diagram {
+  max-height: 500px;
 }
 
-File {
-  display: inline;
-  min-height: 10fr;
-  min-width: 10px;
-  width: auto;
+.container > #a2-diagram {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+@media (grid: 0) {
+  #file-display {
+    display: grid;
+    grid-template-columns: repeat(4, 5fr);
+    grid-gap: 1em;
+  }
+
+  File {
+    height: auto;
+    width: auto;
+    max-height: 500px;
+    max-width: 100px;
+  }
 }
